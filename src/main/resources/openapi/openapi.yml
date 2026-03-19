@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: User Registration API
+  version: 1.0.0
+  description: |
+    API RESTful para registro de usuarios.
+    Todos los endpoints aceptan y retornan JSON.
+
+tags:
+  - name: Users
+    description: Operaciones de usuarios
+
+paths:
+  /api/v1/users:
+    post:
+      tags:
+        - Users
+      operationId: createUser
+      summary: Registrar un nuevo usuario
+      description: Crea un usuario y retorna su información de registro.
+
+      parameters:
+        - in: header
+          name: X-Request-Id
+          schema:
+            type: string
+          required: false
+          description: Identificador idempotente de la solicitud
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+
+      responses:
+        '201':
+          description: Usuario creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreatedResponse'
+
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '409':
+          description: Correo ya registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '415':
+          description: Content-Type no soportado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+
+    UserCreateRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - phones
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: "Juan Rodriguez"
+
+        email:
+          type: string
+          format: email
+          maxLength: 150
+          pattern: '^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+          example: "juan@rodriguez.org"
+
+        password:
+          type: string
+          minLength: 8
+          maxLength: 100
+          description: |
+            Validación configurable en backend (regex dinámico).
+            Este pattern es referencial.
+          pattern: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$'
+          example: "Abc12345"
+
+        phones:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PhoneRequest'
+
+    PhoneRequest:
+      type: object
+      required:
+        - number
+        - citycode
+        - countrycode
+      properties:
+        number:
+          type: string
+          example: "1234567"
+
+        citycode:
+          type: string
+          example: "1"
+
+        countrycode:
+          type: string
+          example: "57"
+
+    UserCreatedResponse:
+      type: object
+      required:
+        - id
+        - created
+        - modified
+        - last_login
+        - token
+        - isactive
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        created:
+          type: string
+          format: date-time
+
+        modified:
+          type: string
+          format: date-time
+
+        last_login:
+          type: string
+          format: date-time
+
+        token:
+          type: string
+
+        isactive:
+          type: boolean
+
+        name:
+          type: string
+
+        email:
+          type: string
+
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneResponse'
+
+    PhoneResponse:
+      type: object
+      properties:
+        number:
+          type: string
+
+        citycode:
+          type: string
+
+        countrycode:
+          type: string
+
+    ErrorResponse:
+      type: object
+      required:
+        - mensaje
+      properties:
+        mensaje:
+          type: string
