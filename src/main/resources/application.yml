@@ -14,6 +14,9 @@ spring:
     console:
       enabled: true
 
+server:
+  forward-headers-strategy: framework
+
 app:
   security:
     password-regex: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$'
