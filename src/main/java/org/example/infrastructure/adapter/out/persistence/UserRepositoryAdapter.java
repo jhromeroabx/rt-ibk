@@ -5,25 +5,20 @@ import org.example.domain.model.User;
 import org.example.domain.port.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class UserRepositoryAdapter implements UserRepositoryPort {
-
     private final UserRepository userRepository;
-
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
-
     @Override
     public void save(User user) {
         userRepository.save(mapToEntity(user));
     }
-
     private UserEntity mapToEntity(User user) {
 
         UserEntity entity = new UserEntity();
@@ -38,7 +33,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
                     pe.setNumber(p.getNumber());
                     pe.setCitycode(p.getCitycode());
                     pe.setCountrycode(p.getCountrycode());
-                    pe.setUser(entity); // 🔥 clave
+                    pe.setUser(entity);
                     return pe;
                 })
                 .toList();

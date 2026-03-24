@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BCryptPasswordEncoderAdapter implements PasswordEncoderPort {
-
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
     @Override
     public String encode(String rawPassword) {
         return encoder.encode(rawPassword);

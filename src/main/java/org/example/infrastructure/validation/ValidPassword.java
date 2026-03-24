@@ -10,10 +10,7 @@ import java.lang.annotation.*;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
-
     String message() default "La contraseña no cumple el formato requerido";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

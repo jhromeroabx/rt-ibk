@@ -6,6 +6,9 @@ info:
     API RESTful para registro de usuarios.
     Todos los endpoints aceptan y retornan JSON.
 
+servers:
+  - url: /
+
 tags:
   - name: Users
     description: Operaciones de usuarios

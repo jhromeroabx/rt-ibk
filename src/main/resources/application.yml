@@ -1,21 +1,25 @@
 spring:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    use-root-path: true
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: ${DB_URL:jdbc:h2:mem:testdb}
     driverClassName: org.h2.Driver
-    username: sa
-    password: ""
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:}
 
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
 
   h2:
     console:
-      enabled: true
+      enabled: ${H2_CONSOLE:true}
 
 app:
   security:
-    password-regex: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$'
-    jwt-secret: "my-super-secret-key-123456789012345"
-    jwt-expiration: 3600000
+    password-regex: ${PASSWORD_REGEX:^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$}
+    jwt-secret: ${JWT_SECRET:my-super-secret-key-12345678901234567890abcdef}
+    jwt-expiration: ${JWT_EXPIRATION:3600000}

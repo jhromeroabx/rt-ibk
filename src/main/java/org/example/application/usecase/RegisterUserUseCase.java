@@ -15,7 +15,6 @@ import org.example.users.api.model.UserCreatedResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
