@@ -66,13 +66,13 @@ curl -X 'POST' \
 ## Headers
 X-Request-Id: identificador para idempotencia
 
-## ▶️ Ejecución
+## Ejecución
 ```bash
 mvn clean install
 mvn spring-boot:run
 ```
 
-## 🌐 Swagger en Codespaces
+## Swagger en Codespaces
 
 Si ejecutas la app detrás del proxy de GitHub Codespaces, Spring debe procesar los headers reenviados para que OpenAPI no publique `http://localhost:8080` como servidor.
 
