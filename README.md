@@ -71,3 +71,16 @@ X-Request-Id: identificador para idempotencia
 mvn clean install
 mvn spring-boot:run
 ```
+
+## 🌐 Swagger en Codespaces
+
+Si ejecutas la app detrás del proxy de GitHub Codespaces, Spring debe procesar los headers reenviados para que OpenAPI no publique `http://localhost:8080` como servidor.
+
+La configuración ya queda habilitada con:
+
+```yaml
+server:
+	forward-headers-strategy: framework
+```
+
+Con eso, Swagger/OpenAPI toma automáticamente la URL pública del Codespace cuando accedes desde el navegador.
